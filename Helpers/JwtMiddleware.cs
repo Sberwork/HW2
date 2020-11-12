@@ -43,20 +43,21 @@ namespace WebApi.Helpers
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                       // установите перекос часов на ноль, чтобы токены истекали точно в момент истечения срока действия токена (а не через столько-то минут)
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-                // attach user to context on successful jwt validation
+                //прикрепить пользователя к контексту при успешной jwt валидации  attach user to context on successful jwt validation
                 context.Items["User"] = userService.GetById(userId);
             }
             catch
             {
-                // do nothing if jwt validation fails
-                // user is not attached to context so request won't have access to secure routes
+                // ничего не делать, если jwt валидация завершится неудачей
+                // пользователь не привязан к контексту, поэтому при запросе не будет иметь доступа к защищенным маршрутам
+
             }
         }
     }
