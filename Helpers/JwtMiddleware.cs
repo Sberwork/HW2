@@ -50,7 +50,7 @@ namespace WebApi.Helpers
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-                //прикрепить пользователя к контексту при успешной jwt валидации  attach user to context on successful jwt validation
+                //прикрепить пользователя к контексту при успешной jwt валидации 
                 context.Items["User"] = userService.GetById(userId);
             }
             catch
