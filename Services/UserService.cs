@@ -38,10 +38,10 @@ namespace WebApi.Services
         {
             var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
-            // возвращает null, если пользователь не найден
+            //   РІРѕР·РІСЂР°С‰Р°РµС‚ null, РµСЃР»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ РЅР°Р№РґРµРЅ
             if (user == null) return null;
 
-            // генерация jwt токенов после успешной jwt аутентификации 
+            // ГЈГҐГ­ГҐГ°Г Г¶ГЁГї jwt ГІГ®ГЄГҐГ­Г®Гў ГЇГ®Г±Г«ГҐ ГіГ±ГЇГҐГёГ­Г®Г© jwt Г ГіГІГҐГ­ГІГЁГґГЁГЄГ Г¶ГЁГЁ 
             var token = generateJwtToken(user);
 
             return new AuthenticateResponse(user, token);
@@ -57,11 +57,11 @@ namespace WebApi.Services
             return _users.FirstOrDefault(x => x.Id == id);
         }
 
-        // вспомогательный метод
+        // ГўГ±ГЇГ®Г¬Г®ГЈГ ГІГҐГ«ГјГ­Г»Г© Г¬ГҐГІГ®Г¤
 
         private string generateJwtToken(User user)
         {
-            // генерация токенов которые действительны в течении 30 дней
+            // ГЈГҐГ­ГҐГ°Г Г¶ГЁГї ГІГ®ГЄГҐГ­Г®Гў ГЄГ®ГІГ®Г°Г»ГҐ Г¤ГҐГ©Г±ГІГўГЁГІГҐГ«ГјГ­Г» Гў ГІГҐГ·ГҐГ­ГЁГЁ 30 Г¤Г­ГҐГ©
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
