@@ -40,8 +40,8 @@ namespace WebApi.Services
 
             //   возвращает null, если пользователь не найден
             if (user == null) return null;
-
-            // ãåíåðàöèÿ jwt òîêåíîâ ïîñëå óñïåøíîé jwt àóòåíòèôèêàöèè 
+            
+            // генерация jwt токенов после успешной jwt аутентификации 
             var token = generateJwtToken(user);
 
             return new AuthenticateResponse(user, token);
@@ -57,11 +57,11 @@ namespace WebApi.Services
             return _users.FirstOrDefault(x => x.Id == id);
         }
 
-        // âñïîìîãàòåëüíûé ìåòîä
+        // вспомогательный метод
 
         private string generateJwtToken(User user)
         {
-            // ãåíåðàöèÿ òîêåíîâ êîòîðûå äåéñòâèòåëüíû â òå÷åíèè 30 äíåé
+        // генерация токенов которые действительны в течении 30 дней
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
